@@ -20,10 +20,7 @@ class RegisterController extends Controller
             'phone' => $request->phone
         ]);
         Mail::to($user->email)->send(new UserVerificationMail($user));
-        return response()->json([
-            'message' => 'User registered successfully! Please check your email for verification.',
-            'user' => $user,
-        ], 201);
+        return redirect()->route('login')->with('success', 'User registered successfully! Please check your email for verification.');
     }
 
 }

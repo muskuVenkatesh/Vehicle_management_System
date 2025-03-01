@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('financial_assets', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->string('name');
-            $table->enum('asset_type', ['bank_account', 'property', 'business', 'security']);
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('login_verification_token')->nullable()->after('remember_token');
+
         });
     }
 
@@ -29,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('financial_assets');
+        Schema::table('users', function (Blueprint $table) {
+            // $table->string('login_verification_token')->nullable()->after('remember_token');
+        });
     }
 };

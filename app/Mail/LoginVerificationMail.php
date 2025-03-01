@@ -24,11 +24,11 @@ class LoginVerificationMail extends Mailable
      */
     public function __construct($user)
     {
-        $this->verificationUrl = URL::temporarySignedRoute(
-            'login.verify',
-            Carbon::now()->addMinutes(60),
-            // ['id' => $this->user->id]
-        );
+        // $this->verificationUrl = URL::temporarySignedRoute(
+        //     'login.verify',
+        //     Carbon::now()->addMinutes(60),
+        //     // ['id' => $this->user->id]
+        // );
         $this->user = $user;
     }
 
@@ -66,15 +66,13 @@ class LoginVerificationMail extends Mailable
         return [];
     }
 
-    public function build()
-{
-    return $this->subject('Login Verification Mail')
-                ->view('email.login_success')
-                ->with([
-                    'name' => $this->user->name,
-                    'email' => $this->user->email,
-                    'time' => now()->toDateTimeString(),
-                ]);
-}
+
+
+public function build()
+    {
+        return $this->subject('Verify Your Login')
+                    ->view('emails.login_success')
+                    ->with(['verificationUrl' => route('login.verify', $this->user->login_verification_token)]);
+    }
 
 }

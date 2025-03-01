@@ -22,23 +22,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register-user',[RegisterController::class,'RegisterUser']);
+// Route::post('/register-user',[RegisterController::class,'RegisterUser']);
 // Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
 //     $request->fulfill();
 //     return response()->json(['message' => 'Email verified successfully!']);
 // })->middleware(['auth:sanctum', 'signed'])->name('verification.verify');
 
-Route::get('/email/verify/{id}', function (Request $request, $id) {
-    $user = User::findOrFail($id);
+// Route::get('/email/verify/{id}', function (Request $request, $id) {
+//     $user = User::findOrFail($id);
 
-    if (!$user->hasVerifiedEmail()) {
-        $user->markEmailAsVerified();
-        return response()->json(['message' => 'Email successfully verified!']);
-    }
-    return response()->json(['message' => 'Email is already verified.']);
-})->name('verification.verify');
+//     if (!$user->hasVerifiedEmail()) {
+//         $user->markEmailAsVerified();
+//         return response()->json(['message' => 'Email successfully verified!']);
+//     }
+//     return response()->json(['message' => 'Email is already verified.']);
+// })->name('verification.verify');
 
-Route::post('/login',[  AuthController::class,'login'])->name('login.verify');
+// Route::post('/login',[  AuthController::class,'login'])->name('login.verify');
 
 
 // login

@@ -49,21 +49,12 @@
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="header">Login Successful</div>
-        <div class="content">
-            <p>Hello, <strong>{{ $name }}</strong></p>
-            <p>You have successfully logged in to your account.</p>
-            <p><strong>Login Time:</strong> {{ $time }}</p>
-            <p>If this wasn't you, please secure your account immediately.</p>
 
-            <a href={{$verificationUrl}} class="button">Go to Dashboard</a>
-        </div>
-        <div class="footer">
-            <p>Thanks,</p>
-            <p><strong>Your Application Team</strong></p>
-        </div>
-    </div>
-</body>
+
+    <body>
+        <h2>Hello {{ $user->name }},</h2>
+        <p>Click the button below to verify your login:</p>
+        <a href="{{ $verificationUrl }}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: #ffffff; text-decoration: none; border-radius: 5px;">Verify Login</a>
+        <p>If you did not attempt to log in, please ignore this email.</p>
+    </body>
 </html>

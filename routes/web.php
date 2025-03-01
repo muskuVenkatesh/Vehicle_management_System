@@ -1,6 +1,12 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +30,30 @@ Route::get('login',function(){
 Route::get('register',function(){
     return view('auth.register');
 })->name('register');
+
+Route::post('register', [RegisterController::class, 'RegisterUser'])->name('registerUser');
+Route::get('/email/verify/{id}', function (Request $request, $id) {
+    $user = User::findOrFail($id);
+
+    if (!$user->hasVerifiedEmail()) {
+        $user->markEmailAsVerified();
+        return response()->json(['message' => 'Email successfully verified!']);
+    }
+    return response()->json(['message' => 'Email is already verified.']);
+})->name('verification.verify');
+
+Route::post('/login',[  LoginController::class,'login'])->name('loginUser');
+Route::get('/login/verify/{token}', [LoginController::class, 'verify'])->name('login.verify');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth')->name('dashboard');
+
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users');
+
+});
+
+
+
