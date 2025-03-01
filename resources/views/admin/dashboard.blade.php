@@ -70,9 +70,9 @@
             <div class="row">
                 <div class="col-md-3">
                     <div class="card bg-primary text-white">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h4>Total Vehicles</h4>
-                            <p>{{ $totalVehicles ?? 'Loading...' }} Vehicles</p>
+                            <p class="fw-bold display-4">{{ $totalVehicles ?? '0' }}</p>
                         </div>
                     </div>
                 </div>
@@ -80,29 +80,37 @@
                     <div class="card bg-success text-white">
                         <div class="card-body text-center">
                             <h4>Total Users</h4>
-                            <p class="fw-bold display-4">{{ $totalUsers ?? 'Loading...' }}</p>
+                            <p class="fw-bold display-4">{{ $totalUsers ?? '0' }}</p>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-3">
                     <div class="card bg-warning text-dark">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h4>Pending Bookings</h4>
-                            <p>{{ $pendingBookings ?? 'Loading...' }} Pending</p>
+                            <p class="fw-bold display-4">{{ $pendingBookings ?? '0' }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card bg-danger text-white">
-                        <div class="card-body">
-                            <h4>Revenue</h4>
-                            <p>${{ $revenue ?? '0' }}</p>
+                        <div class="card-body text-center">
+                            <h4>Completed Bookings</h4>
+                            <p class="fw-bold display-4">{{ $completedBookings ?? '0' }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mt-3">
+                    <div class="card bg-dark text-white">
+                        <div class="card-body text-center">
+                            <h4>Total Revenue</h4>
+                            <p class="fw-bold display-4">${{ number_format($revenue, 2) ?? '0.00' }}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
     </div>
 </div>

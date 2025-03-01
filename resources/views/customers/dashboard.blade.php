@@ -10,15 +10,15 @@
             <a href="{{ route('customer.dashboard') }}" class="list-group-item">
                 <i class="fa fa-home"></i> Dashboard
             </a>
-            <a href="{{ route('customer.bookings.create') }}" class="list-group-item">
+            <a href="{{ route('customer.bookings') }}" class="list-group-item">
                 <i class="fa fa-car"></i> Book a Vehicle
             </a>
-            <a href="{{ route('customer.bookings.index') }}" class="list-group-item">
+            {{-- <a href="{{ route('customer.bookings.index') }}" class="list-group-item">
                 <i class="fa fa-list"></i> My Bookings
             </a>
             <a href="{{ route('customer.profile') }}" class="list-group-item">
                 <i class="fa fa-user"></i> Manage Profile
-            </a>
+            </a> --}}
         </div>
     </div>
 
@@ -53,32 +53,41 @@
 
         <div class="container-fluid mt-4">
             <div class="row">
+                <!-- Total Bookings -->
                 <div class="col-md-4">
-                    <div class="card bg-primary text-white">
-                        <div class="card-body">
-                            <h4>Total Bookings</h4>
-                            <p>{{ $totalBookings ?? 'Loading...' }} Bookings</p>
+                    <div class="card bg-primary text-white shadow-lg">
+                        <div class="card-body text-center">
+                            <h4 class="mb-3">Total Bookings</h4>
+                            <p class="display-4 fw-bold">{{ $totalBookings ?? '0' }}</p>
+                            <small class="text-uppercase">Bookings</small>
                         </div>
                     </div>
                 </div>
+
+                <!-- Pending Bookings -->
                 <div class="col-md-4">
-                    <div class="card bg-success text-white">
-                        <div class="card-body">
-                            <h4>Pending Bookings</h4>
-                            <p>{{ $pendingBookings ?? 'Loading...' }} Pending</p>
+                    <div class="card bg-warning text-dark shadow-lg">
+                        <div class="card-body text-center">
+                            <h4 class="mb-3">Pending Bookings</h4>
+                            <p class="display-4 fw-bold">{{ $pendingBookings ?? '0' }}</p>
+                            <small class="text-uppercase">Pending</small>
                         </div>
                     </div>
                 </div>
+
+                <!-- Completed Bookings -->
                 <div class="col-md-4">
-                    <div class="card bg-warning text-dark">
-                        <div class="card-body">
-                            <h4>Completed Bookings</h4>
-                            <p>{{ $completedBookings ?? 'Loading...' }} Completed</p>
+                    <div class="card bg-success text-white shadow-lg">
+                        <div class="card-body text-center">
+                            <h4 class="mb-3">Completed Bookings</h4>
+                            <p class="display-4 fw-bold">{{ $completedBookings ?? '0' }}</p>
+                            <small class="text-uppercase">Completed</small>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 

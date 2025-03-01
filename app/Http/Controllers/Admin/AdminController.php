@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\User;
-
-
+use App\Models\Booking;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -14,10 +14,8 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Get the logged-in user ID
         $loggedInUserId = auth()->id();
 
-        // Fetch users excluding the logged-in user
         $users = User::with('roles')
                      ->where('id', '!=', $loggedInUserId)
                      ->paginate(10);
@@ -28,11 +26,21 @@ class AdminController extends Controller
     public function AdminDashboard()
     {
         $totalUsers = User::count();
-        return view('admin.dashboard', compact('totalUsers'));
+        $totalRoles = Role::count();
+        $totalVehicles = Vehicle::count();
+        $bookingCount = Booking::count();
+        $pendingBookings = Booking::where('booking_status', 'pending')->count();
+        $completedBookings = Booking::where('booking_status', 'completed')->count();
+        $revenue = Booking::where('booking_status', 'completed')->sum('total_amount'); // Assuming you have a `total_amount` column
+
+        return view('admin.dashboard', compact(
+            'totalUsers', 'totalRoles', 'totalVehicles', 'bookingCount', 'pendingBookings', 'completedBookings', 'revenue'
+        ));
     }
 
+
     public function show($id)
-{
+   {
     $user = User::with('roles')->find($id);
 
     if (!$user) {

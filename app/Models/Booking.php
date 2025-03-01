@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\User;
+use App\Models\locations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Booking extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'customer_id',
+        'customer_name',
         'vehicle_id',
         'pickup_location_id',
         'return_location_id',
@@ -21,10 +23,10 @@ class Booking extends Model
     ];
 
 
-    public function customer()
-    {
-        return $this->belongsTo(Customer::class);
-    }
+    // public function customer()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
 
     /**
      * Get the vehicle for this booking.
@@ -39,7 +41,7 @@ class Booking extends Model
      */
     public function pickupLocation()
     {
-        return $this->belongsTo(Location::class, 'pickup_location_id');
+        return $this->belongsTo(locations::class, 'pickup_location_id');
     }
 
     /**
@@ -47,6 +49,6 @@ class Booking extends Model
      */
     public function returnLocation()
     {
-        return $this->belongsTo(Location::class, 'return_location_id');
+        return $this->belongsTo(locations::class, 'return_location_id');
     }
 }
