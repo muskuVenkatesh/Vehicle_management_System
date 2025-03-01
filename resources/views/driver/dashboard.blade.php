@@ -2,18 +2,22 @@
 
 @section('content')
 <div class="d-flex" id="wrapper">
+
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar-wrapper">
-        <div class="sidebar-heading">Agent Panel</div>
+        <div class="sidebar-heading">Driver Panel</div>
         <div class="list-group">
-            <a href="{{ route('agent.dashboard') }}" class="list-group-item"><i class="fa fa-home"></i> Dashboard</a>
-            <a href="{{ route('vehicles.index') }}" class="list-group-item"><i class="fa fa-car"></i> Add Vehicle</a>
-            <a href="{{ route('agent.bookings.index') }}" class="list-group-item"><i class="fa fa-list"></i> Manage Bookings</a>
-            <a href="{{ route('assign.ride.form') }}" class="list-group-item"><i class="fa fa-user"></i> Assign Drivers</a>
+            <a href="{{ route('driver.dashboard') }}" class="list-group-item">
+                <i class="fa fa-tachometer-alt"></i> Dashboard
+            </a>
+            <a href="{{ route('driver.assignedBookings') }}" class="list-group-item">
+                <i class="fa fa-clipboard-list"></i> Assigned Bookings
+            </a>
+            <a href="{{ route('driver.manageTrips') }}" class="list-group-item">
+                <i class="fa fa-route"></i> Manage Trips
+            </a>
         </div>
     </div>
-
-
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -21,48 +25,39 @@
             <button class="btn btn-dark" id="menu-toggle">☰</button>
             <div class="ms-auto">
                 <div class="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-bs-toggle="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         Welcome, {{ Auth::user()->name }}
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="{{ route('customer.profile') }}"><i class="fas fa-user"></i> Profile</a></li>
-                        <li><a class="dropdown-item text-danger" href="#" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" onclick="logoutUser()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </nav>
 
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
         <div class="container-fluid mt-4">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card bg-primary text-white">
-                        <div class="card-body">
-                            <h4>Total Vehicles</h4>
-                            <p>{{ $totalVehicles ?? 'Loading...' }} Vehicles</p>
+                        <div class="card-body text-center">
+                            <h4>Assigned Rides</h4>
+                            <p class="fw-bold display-4">{{ $assignedBookings ?? '0' }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="card bg-success text-white">
-                        <div class="card-body">
-                            <h4>Total Bookings</h4>
-                            <p>{{ $totalBookings ?? 'Loading...' }} Bookings</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-warning text-dark">
-                        <div class="card-body">
-                            <h4>Pending Bookings</h4>
-                            <p>{{ $pendingBookings ?? 'Loading...' }} Pending</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card bg-danger text-white">
-                        <div class="card-body">
-                            <h4>Available Drivers</h4>
-                            <p>{{ $availableDrivers ?? 'Loading...' }} Available</p>
+                        <div class="card-body text-center">
+                            <h4>Trips Managed</h4>
+                            <p class="fw-bold display-4">{{ $managedTrips ?? '0' }}</p>
                         </div>
                     </div>
                 </div>
@@ -70,7 +65,6 @@
         </div>
     </div>
 </div>
-
 
 <style>
     html, body {
@@ -131,12 +125,13 @@
     .toggled #page-content-wrapper {
         margin-left: 0;
     }
-    </style>
+</style>
 
-<!-- Sidebar Toggle & Logout Script -->
 <script>
-    document.getElementById("menu-toggle").addEventListener("click", function() {
-        document.getElementById("wrapper").classList.toggle("toggled");
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("menu-toggle").addEventListener("click", function () {
+            document.getElementById("wrapper").classList.toggle("toggled");
+        });
     });
 
     function logoutUser() {
@@ -155,5 +150,4 @@
         });
     }
 </script>
-
 @endsection

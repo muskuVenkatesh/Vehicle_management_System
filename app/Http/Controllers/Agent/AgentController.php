@@ -60,4 +60,40 @@ public function updateBookingStatus(Request $request, $id)
     return redirect()->back()->with('success', 'Booking status updated successfully.');
 }
 
+public function showAssignRideForm()
+{
+    $bookings = Booking::where('booking_status','pending')->get();
+    $drivers = User::role('driver')->get();
+
+    return view('agent.assign_ride', compact('bookings', 'drivers'));
+}
+
+
+function assignBookingToRide()
+{
+    $bookings = Booking::whereNull('driver_id')->get();
+    $drivers = User::role('driver')->get();
+    if ($bookings->isEmpty()) {
+        return response()->json(['message' => 'No bookings available'], 404);
+    }
+if ($drivers->isEmpty()) {
+        return response()->json(['message' => 'No drivers available'], 404);
+    }
+
+    DB::transaction(function () use ($bookings, $drivers) {
+        foreach ($bookings as $booking) {
+            $driver = $drivers->random();
+
+            $ride = Ride::create([
+                'driver_id'  => $driver->id,
+                'booking_id' => $booking->id,
+                'status'     => 'scheduled',
+                'pickup_location' => $booking->pickup_location,
+                'dropoff_location' => $booking->dropoff_location,
+            ]);
+
+            $booking->update(['driver_id' => $driver->id]);
+        }
+    });
+}
 }

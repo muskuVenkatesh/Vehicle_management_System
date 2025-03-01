@@ -72,6 +72,8 @@ Route::middleware(['auth', 'role:agent'])->group(function () {
     Route::get('/agent/vehicles', [AgentController::class, 'index'])->name('agent.users.index');
     Route::get('/agent/bookings', [AgentController::class, 'GetAllBookings'])->name('agent.bookings.index');
     Route::post('/bookings/update-status/{id}', [AgentController::class, 'updateBookingStatus'])->name('bookings.updateStatus');
+    Route::get('/assign-ride', [AgentController::class, 'showAssignRideForm'])->name('assign.ride.form');
+    Route::post('/assign-ride', [AgentController::class, 'assignRide'])->name('assign.ride');
 
 
     Route::post('/logout', function () {
@@ -96,12 +98,24 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
 
         return redirect('/')->with('success', 'You have been logged out successfully!');
     })->name('logout');
-
-
     Route::post('/customer/book-vehicle', [BookingController::class, 'book'])->name('customer.book.vehicle');
     Route::get('/customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
     Route::post('/customer/profile/update', [CustomerController::class, 'updateProfile'])->name('customer.profile.update');
 });
+
+    Route::middleware(['auth', 'role:driver'])->group(function () {
+    Route::get('/driver/dashboard', [DriverController::class, 'dashboard'])->name('driver.dashboard');
+    Route::get('/driver/assigned-bookings', [DriverController::class, 'assignedBookings'])
+    ->name('driver.assignedBookings');
+    Route::get('/driver/manage-trips', [DriverController::class, 'manageTrips'])
+    ->name('driver.manageTrips');
+
+
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/dashboard')->with('success', 'You have been logged out successfully!');
+    })->name('logout');
+    });
 
 
 
