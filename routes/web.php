@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Admin\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,8 +51,12 @@ Route::get('/dashboard', function () {
 
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users');
+    Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    // Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users');
+
+    Route::resource('/users', AdminController::class);
+    Route::get('permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
+    Route::post('permissions/assign', [PermissionController::class, 'assignPermissions'])->name('admin.permissions.assign');
 
 });
 

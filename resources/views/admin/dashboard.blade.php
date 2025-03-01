@@ -7,12 +7,31 @@
     <div class="sidebar" id="sidebar-wrapper">
         <div class="sidebar-heading">Admin Panel</div>
         <div class="list-group">
-            <a href="{{ route('admin.dashboard') }}" class="list-group-item">Dashboard</a>
-            {{-- <a href="{{ route('admin.vehicles') }}" class="list-group-item">Manage Vehicles</a> --}}
-            <a href="{{ route('admin.users') }}" class="list-group-item">Manage Users</a>
-            {{-- <a href="{{ route('admin.reports') }}" class="list-group-item">Reports</a> --}}
-            {{-- <a href="{{ route('admin.settings') }}" class="list-group-item">Settings</a> --}}
+            <a href="{{ route('admin.dashboard') }}" class="list-group-item">
+                <i class="fa fa-tachometer-alt"></i> Dashboard
+            </a>
+
+            {{-- <a href="{{ route('admin.vehicles') }}" class="list-group-item">
+                <i class="fa fa-car"></i> Manage Vehicles
+            </a> --}}
+
+            <a href="{{ route('users.index') }}" class="list-group-item">
+                <i class="fa fa-users"></i> Manage Users
+            </a>
+
+            {{-- <a href="{{ route('admin.reports') }}" class="list-group-item">
+                <i class="fa fa-chart-bar"></i> Reports
+            </a> --}}
+
+            <a href="{{ route('admin.permissions.index') }}" class="list-group-item">
+                <i class="fa fa-shield-alt"></i> Permissions
+            </a>
+
+            {{-- <a href="{{ route('admin.settings') }}" class="list-group-item">
+                <i class="fa fa-cogs"></i> Settings
+            </a> --}}
         </div>
+
     </div>
 
     <!-- Page Content -->
@@ -36,12 +55,13 @@
                 </div>
                 <div class="col-md-3">
                     <div class="card bg-success text-white">
-                        <div class="card-body">
+                        <div class="card-body text-center">
                             <h4>Total Users</h4>
-                            <p>{{ $totalUsers ?? 'Loading...' }} Users</p>
+                            <p class="fw-bold display-4">{{ $totalUsers ?? 'Loading...' }}</p>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-md-3">
                     <div class="card bg-warning text-dark">
                         <div class="card-body">
