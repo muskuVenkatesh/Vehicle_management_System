@@ -39,9 +39,32 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
             <button class="btn btn-dark" id="menu-toggle">☰</button>
             <div class="ms-auto">
-                <span class="navbar-text me-3">Welcome, {{ Auth::user()->name }}</span>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Welcome, {{ Auth::user()->name }}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('users.edit', Auth::user()->id) }}">
+                                <i class="fas fa-user"></i> Profile
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a class="dropdown-item text-danger" href="#" onclick="logoutUser()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
+
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf
+        </form>
+
 
         <div class="container-fluid mt-4">
             <div class="row">
@@ -153,9 +176,39 @@ html, body {
 </style>
 
 <!-- Sidebar Toggle Script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById("menu-toggle").addEventListener("click", function() {
         document.getElementById("wrapper").classList.toggle("toggled");
     });
+
+    function logoutUser() {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You will be logged out!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, Logout!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    }
+
+    // Show success message after logout
+    @if(session('success'))
+        Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "{{ session('success') }}",
+            showConfirmButton: false,
+            timer: 2000
+        });
+    @endif
 </script>
+
+
 @endsection

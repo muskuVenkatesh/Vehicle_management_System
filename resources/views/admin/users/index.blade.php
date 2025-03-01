@@ -50,6 +50,7 @@
                     <th>S.No.</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Phone</th>
                     <th>Role</th>
                     <th>Actions</th>
                 </tr>
@@ -61,6 +62,7 @@
                     <td>{{ $sno++ }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone }}</td>
                     <td><span class="badge bg-info">{{ optional($user->roles)->pluck('name')->join(', ') ?: 'No Role Assigned' }}</span></td>
                     <td>
                         <button class="btn btn-info btn-sm" onclick="showProfile({{ $user->id }}, '{{ $user->name }}')">
@@ -116,6 +118,7 @@
                     <table class="table table-bordered">
                         <tr><th>Name</th><td>${data.name}</td></tr>
                         <tr><th>Email</th><td>${data.email}</td></tr>
+                         <tr><th>Phone</th><td>${data.phone}</td></tr>
                         <tr><th>Role</th><td>${data.roles ? data.roles.join(', ') : 'N/A'}</td></tr>
                     </table>
                 `;

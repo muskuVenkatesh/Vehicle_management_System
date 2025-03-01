@@ -20,6 +20,11 @@
             </div>
 
             <div class="form-group mb-3">
+                <label class="fw-bold">Phone</label>
+                <input type="phone" name="phone" class="form-control" value="{{ $user->phone }}" required>
+            </div>
+
+            <div class="form-group mb-3">
                 <label class="fw-bold">Role</label>
                 <select name="role" class="form-control" required>
                     @foreach($roles as $role)

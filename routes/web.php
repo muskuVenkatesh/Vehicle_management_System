@@ -52,6 +52,10 @@ Route::get('/dashboard', function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/dashboard')->with('success', 'You have been logged out successfully!');
+    })->name('logout');
     // Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users');
 
     Route::resource('/users', AdminController::class);

@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Notifications\UserNotification;
+use Illuminate\Support\Facades\Notification;
 
 class AdminController extends Controller
 {
@@ -70,6 +72,12 @@ class AdminController extends Controller
         ]);
 
         $user->assignRole($request->role);
+
+        $message = "Your account has been created. Please check your email for login details.";
+        // Notification::send($user, new UserNotification($user, $message));
+
+        $user->notify(new UserNotification($user, $message));
+
 
         // return redirect()->route('users.index')->with('success', 'User Created Successfully');
         return response()->json([

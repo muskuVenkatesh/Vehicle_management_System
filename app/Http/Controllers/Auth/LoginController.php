@@ -15,49 +15,7 @@ use Illuminate\Support\Facades\Mail;
 class LoginController extends Controller
 {
 
-
-//     public function login(Request $request)
-// {
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required'
-//     ]);
-//     $user =  User::where('email',$request->only('email'))->first();
-
-//     // $token = auth('api')->claims([
-//     //     'user_id' => $user->id,
-//     // // ])->login($user);
-
-//     if (!$token = auth('api')->attempt($request->only('email', 'password'))) {
-//         return response()->json(['error' => 'Invalid credentials'], 401);
-//     }
-
-//     Mail::to($user->email)->send(new LoginVerificationMail($user));
-//     return response()->json([
-//         'token' => $token,
-//     ]);
-// }
-
-
-// public function login(Request $request)
-// {
-//     $request->validate([
-//         'email' => 'required|email',
-//         'password' => 'required'
-//     ]);
-
-//     if (!auth()->attempt($request->only('email', 'password'))) {
-//         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
-//     }
-
-//     $user = auth()->user();
-
-//     Mail::to($user->email)->send(new LoginVerificationMail($user));
-
-//     return redirect()->route('dashboard')->with('success', 'Login successful!');
-// }
-
-public function login(Request $request)
+    public function login(Request $request)
 {
     $request->validate([
         'email' => 'required|email',
