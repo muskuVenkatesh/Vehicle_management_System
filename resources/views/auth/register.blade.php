@@ -33,6 +33,14 @@
             </div>
 
             <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" name="address" class="form-control @error('address') is-invalid @enderror" required>
+                @error('address')
+                    <div class="text-danger small">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" required>
                 @error('password')

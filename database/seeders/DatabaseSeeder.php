@@ -6,6 +6,9 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\LocationSeeder;
+use Database\Seeders\BookingsTableSeeder;
+use Database\Seeders\VehiclesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +28,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
+            LocationSeeder::class,
+            VehiclesTableSeeder::class,
+
         ]);
 
         $admin = User::create([

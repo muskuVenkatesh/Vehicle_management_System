@@ -19,6 +19,7 @@ class RegisterController extends Controller
             'password' => bcrypt($request->password),
             'phone' => $request->phone
         ]);
+        $user->assignRole('customer');
         Mail::to($user->email)->send(new UserVerificationMail($user));
         return redirect()->route('login')->with('success', 'User registered successfully! Please check your email for verification.');
     }

@@ -6,7 +6,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Agent\AgentController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\driver\DriverController;
+use App\Http\Controllers\vehicle\VehicleController;
 use App\Http\Controllers\Admin\PermissionController;
 
 /*
@@ -56,12 +59,33 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Auth::logout();
         return redirect('/dashboard')->with('success', 'You have been logged out successfully!');
     })->name('logout');
-    // Route::get('/admin/users', [AdminController::class, 'getAllUsers'])->name('admin.users');
-
     Route::resource('/users', AdminController::class);
     Route::get('permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
     Route::post('permissions/assign', [PermissionController::class, 'assignPermissions'])->name('admin.permissions.assign');
 
+});
+
+Route::middleware(['auth', 'role:agent'])->group(function () {
+    Route::resource('/vehicles', VehicleController::class);
+    Route::get('/agent/vehicles', [AgentController::class, 'index'])->name('agent.users.index');
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/dashboard')->with('success', 'You have been logged out successfully!');
+    })->name('logout');
+
+    Route::get('/agent/dashboard', [AgentController::class, 'dashboard'])->name('agent.dashboard');
+    Route::get('/agent/bookings', [BookingController::class, 'index'])->name('agent.bookings.index');
+    Route::get('/agent/bookings/create', [BookingController::class, 'create'])->name('agent.bookings.create');
+    Route::get('/agent/assign-driver', [DriverController::class, 'assign'])->name('agent.assign.driver');
+});
+
+
+Route::middleware(['auth', 'customer'])->group(function () {
+    Route::get('/customer/dashboard', [CustomerController::class, 'dashboard'])->name('customer.dashboard');
+    Route::get('/customer/bookings', [BookingController::class, 'index'])->name('customer.bookings');
+    Route::post('/customer/book-vehicle', [BookingController::class, 'book'])->name('customer.book.vehicle');
+    Route::get('/customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
+    Route::post('/customer/profile/update', [CustomerController::class, 'updateProfile'])->name('customer.profile.update');
 });
 
 
